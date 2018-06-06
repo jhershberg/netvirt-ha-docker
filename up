@@ -1,0 +1,44 @@
+function launch_container()
+{
+    network=$1
+    index=$2
+    ip=172.28.5.$2
+    netvirt_dir=$3
+
+    sudo docker run --name odl_${ip} -d -ti \
+        --cap-add NET_ADMIN \
+        --network=${network} --ip=${ip} \
+        -v ${netvirt_dir}/karaf/target/assembly/bin:/netvirt/karaf/target/assembly/bin \
+        -v ${netvirt_dir}/karaf/target/assembly/deploy:/netvirt/karaf/target/assembly/deploy:ro \
+        -v ${netvirt_dir}/karaf/target/assembly/lib:/netvirt/karaf/target/assembly/lib:ro \
+        odl bash
+    sudo docker exec odl_${ip} \
+        /netvirt/karaf/target/assembly/bin/configure_cluster.sh $index 172.28.5.1 172.28.5.2 172.28.5.3
+}
+
+if [ "$(sudo docker network list | grep 'odl-cluster')" = "" ]
+then
+    sudo docker network create --subnet=172.28.0.0/16 --ip-range=172.28.5.0/24 --gateway=172.28.5.254 odl-cluster
+fi
+
+path=$1
+if [ "$path" = "" ]
+then
+    echo Usage: ./up \<path to netvirt\> [container nums, e.g., 1 2 3 or 1 2]
+    exit 2
+fi
+
+if [ ! -d "$path" ]
+then
+    echo $path is not a directory, please use netvirt\'s root directory \(where there is a compiled karaf\)
+    exit 2
+fi 
+
+shift
+
+containers=${@:-1 2 3}
+
+for i in $containers
+do
+    launch_container odl-cluster $i $path
+done

@@ -1,0 +1,19 @@
+path=$1
+if [ "$path" = "" ]
+then
+    echo Usage: ./build \<path to netvirt\>
+    exit 2
+fi
+
+cp -fr ${path}/karaf/target/assembly/system ./system
+cp -fr ${path}/karaf/target/assembly/configuration ./configuration
+cp -fr ${path}/karaf/target/assembly/etc ./etc
+
+sed -i -e 's/\(featuresBoot =.*\)/\1,odl-netvirt-openstack/' etc/org.apache.karaf.features.cfg 
+wget -O ${path}/karaf/target/assembly/bin/configure_cluster.sh https://raw.githubusercontent.com/opendaylight/integration-distribution/master/karaf/src/main/assembly/bin/configure_cluster.sh
+chmod +x ${path}/karaf/target/assembly/bin/configure_cluster.sh
+
+mkdir -p configuration/initial
+cp -v initial/* configuration/initial
+
+sudo docker build . -t odl
