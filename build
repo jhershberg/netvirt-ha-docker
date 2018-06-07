@@ -13,7 +13,4 @@ sed -i -e 's/\(featuresBoot =.*\)/\1,odl-netvirt-openstack/' etc/org.apache.kara
 wget -O ${path}/karaf/target/assembly/bin/configure_cluster.sh https://raw.githubusercontent.com/opendaylight/integration-distribution/master/karaf/src/main/assembly/bin/configure_cluster.sh
 chmod +x ${path}/karaf/target/assembly/bin/configure_cluster.sh
 
-mkdir -p configuration/initial
-cp -v initial/* configuration/initial
-
 sudo docker build . -t odl
