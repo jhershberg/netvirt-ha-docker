@@ -1,3 +1,4 @@
+set -x
 path=$1
 if [ "$path" = "" ]
 then
@@ -5,12 +6,22 @@ then
     exit 2
 fi
 
-cp -fr ${path}/karaf/target/assembly/system ./system
-cp -fr ${path}/karaf/target/assembly/configuration ./configuration
-cp -fr ${path}/karaf/target/assembly/etc ./etc
-
-sed -i -e 's/\(featuresBoot =.*\)/\1,odl-netvirt-openstack/' etc/org.apache.karaf.features.cfg 
 wget -O ${path}/karaf/target/assembly/bin/configure_cluster.sh https://raw.githubusercontent.com/opendaylight/integration-distribution/master/karaf/src/main/assembly/bin/configure_cluster.sh
 chmod +x ${path}/karaf/target/assembly/bin/configure_cluster.sh
+
+for i in 1 2 3
+do
+    base=./mounts/${i}
+
+    sudo mount -t overlay | grep -o "mounts/${i}/assembly" | xargs sudo umount
+    sudo rm -fr $base
+
+    mkdir -p ${base}/assembly
+    mkdir -p ${base}/workdir
+    mkdir -p ${base}/upper
+    sudo mount -t overlay overlay -o lowerdir=${path}/karaf/target/assembly,upperdir=${base}/upper,workdir=${base}/workdir ${base}/assembly
+
+    sed -i -e 's/\(featuresBoot =.*\)/\1,odl-netvirt-openstack/' ${base}/assembly/etc/org.apache.karaf.features.cfg 
+done
 
 sudo docker build . -t odl

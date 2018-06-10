@@ -1,12 +1,8 @@
+set +x 
+
 for i in ${@:-1 2 3}
 do
     echo Starting $i...
     sudo docker exec -d odl_172.28.5.$i /netvirt/karaf/target/assembly/bin/karaf
     sleep 5
 done
-
-#for i in $(seq 1 1000)
-#do
-#curl -u admin:admin http://172.28.5.$1:8181/diagstatus
-#sleep 10
-#done
