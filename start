@@ -3,6 +3,6 @@ set +x
 for i in ${@:-1 2 3}
 do
     echo Starting $i...
-    sudo docker exec -d odl_172.28.5.$i /netvirt/karaf/target/assembly/bin/karaf
+    sudo docker exec -td odl_172.28.5.$i /netvirt/karaf/target/assembly/bin/karaf
     sleep 5
 done
