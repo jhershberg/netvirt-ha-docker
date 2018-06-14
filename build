@@ -5,9 +5,26 @@ then
     echo Usage: ./build \<path to netvirt\>
     exit 2
 fi
+targetpath=${path}/karaf/target
+feature="odl-netvirt-openstack"
+if [[ $1 = *"hwvtepsouthbound"* ]];
+then
+    targetpath="$1/hwvtepsouthbound-karaf/target"
+    feature="odl-hwvtepsouthbound-rest"
+elif [[ $1 = *"southbound"* ]];
+then
+    targetpath="$1/southbound-karaf/target"
+    feature="odl-southbound-rest"
+elif [[ $1 = *"genius"* ]];
+then
+    feature="odl-genius-rest"
+elif [[ $1 = *"neutron"* ]];
+then
+    feature="odl-neutron-service"
+fi
 
-wget -O ${path}/karaf/target/assembly/bin/configure_cluster.sh https://raw.githubusercontent.com/opendaylight/integration-distribution/master/karaf/src/main/assembly/bin/configure_cluster.sh
-chmod +x ${path}/karaf/target/assembly/bin/configure_cluster.sh
+wget -O ${targetpath}/assembly/bin/configure_cluster.sh https://raw.githubusercontent.com/opendaylight/integration-distribution/master/karaf/src/main/assembly/bin/configure_cluster.sh
+chmod +x ${targetpath}/assembly/bin/configure_cluster.sh
 
 for i in 1 2 3
 do
@@ -19,9 +36,9 @@ do
     mkdir -p ${base}/assembly
     mkdir -p ${base}/workdir
     mkdir -p ${base}/upper
-    sudo mount -t overlay overlay -o lowerdir=${path}/karaf/target/assembly,upperdir=${base}/upper,workdir=${base}/workdir ${base}/assembly
+    sudo mount -t overlay overlay -o lowerdir=${targetpath}/assembly,upperdir=${base}/upper,workdir=${base}/workdir ${base}/assembly
 
-    sed -i -e 's/\(featuresBoot =.*\)/\1,odl-netvirt-openstack/' ${base}/assembly/etc/org.apache.karaf.features.cfg 
+    sed -i -e "s/\(featuresBoot =.*\)/\1,${feature}/" ${base}/assembly/etc/org.apache.karaf.features.cfg 
 done
 
 sudo docker build . -t odl

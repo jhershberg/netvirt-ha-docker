@@ -7,10 +7,10 @@ function launch_container()
     sudo docker run --name odl_${ip} -d -ti \
         --cap-add NET_ADMIN \
         --network=${network} --ip=${ip} \
-        -v $(pwd)/mounts/${index}/assembly:/netvirt/karaf/target/assembly \
+        -v $(pwd)/mounts/${index}/assembly:/odlha/karaf/target/assembly \
         odl bash
     sudo docker exec odl_${ip} \
-        /netvirt/karaf/target/assembly/bin/configure_cluster.sh $index 172.28.5.1 172.28.5.2 172.28.5.3
+        /odlha/karaf/target/assembly/bin/configure_cluster.sh $index 172.28.5.1 172.28.5.2 172.28.5.3
 }
 
 set -x
