@@ -15,15 +15,47 @@ Three running (and empty) netvirt containers have been observed to occupy about 
 
 ## What scripts are provided
 
-Script Name | Description
-------------|------------
-**build** | builds the overlay mounts for each container and the Docker image
-**up** | configures the dedicated docker network used by the ODL containers (if it does not already exist) and launches the containers (but does not run ODL)
-**start** | starts the ODL instances inside the containers
-**wipe** | completely deletes the docker containers
+Script Name    | Description
+---------------|------------
+**build**      | builds the overlay mounts for each container and the Docker image
+**up**         | configures the dedicated docker network used by the ODL containers (if it does not already exist) and launches the containers (but does not run ODL)
+**start**      | starts the ODL instances inside the containers
+**wipe**       | completely deletes the docker containers
 **diagstatus** | Convenience script to check whether an ODL is up and running using the diagstatus URL
-**shell** | Convenience script to get into a shell running on one of the containers
+**shell**      | Convenience script to get into a shell running on one of the containers
 
+## Understanding the Environment
+
+These scripts will create and configure three containers:
+
+Name           | IP         | Overlay Directory
+---------------|------------|-------------------
+odl_172.28.5.1 | 172.28.5.1 | ./mounts/1/assembly
+odl_172.28.5.2 | 172.28.5.2 | ./mounts/2/assembly
+odl_172.28.5.3 | 172.28.5.3 | ./mounts/3/assembly
+
+The containers are networked together like this:
+
+```
++----------------------------------------------------+
+|                    HOST MACHINE                    |
+|                                                    |
+|    +------------+                                  |
+|    | odl_       |                                  |
+|    | 172.28.5.1 |----+                             |
+|    +------------+    |                             |
+|                      |                             |
+|    +------------+    |                             |
+|    | odl_       |----+--bridge: 172.28.5.254       |
+|    | 172.28.5.2 |    |                             |
+|    +------------+    |                             | 
+|                      |                             |
+|    +------------+    |                             |
+|    | odl_       |----+                             |
+|    | 172.28.5.1 |                                  |
+|    +------------+                                  |
++----------------------------------------------------+
+```
 
 ## How to...
 
@@ -37,7 +69,10 @@ Note that all scripts must be run from the root directory of this project (where
 
 ### Creating the containers
 
-1. Build the overlay mounts and docker image: `./build \<path to your netvirt clone\>`. N.B. that running this script will remove and erase any mount directories from previous runs. If you want to save logs, copy them aside.
+1. Build the overlay mounts and docker image: `./build <path to your netvirt clone>`. 
+   
+   N.B. that running this script will remove and erase any mount directories from previous runs. If you want to save logs, copy them aside.
+   
 2. Launch the docker containers: `./up`
 
 ### Running netvirt
