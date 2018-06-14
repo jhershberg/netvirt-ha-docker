@@ -1,1 +1,7 @@
+set +x
+if [ "$1" = "" ];
+then
+    echo "Usage: ./diagstatus 1|2|3"
+    exit 2
+fi
 curl -u admin:admin http://172.28.5.$1:8181/diagstatus

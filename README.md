@@ -12,6 +12,12 @@ can easily be inspected. Each container's files are stored `./mounts/[1|2|3]/ass
 
 Three running (and empty) netvirt containers have been observed to occupy about 1.3GB of memory each.
 
+Currently following projects are supported:
+1. Netvirt
+2. Genius
+3. OVSDB Southbound
+4. HWVTEP Southbound
+5. Neutron
 
 ## What scripts are provided
 
@@ -63,13 +69,14 @@ The containers are networked together like this:
 
 1. You must have docker installed
 2. pull the fedora image, `docker pull fedora:latest`
-3. You must have netvirt cloned and netvirt/karaf fully built (but not run)
+3. You must have your project cloned and project/karaf fully built (but not run)
 
 Note that all scripts must be run from the root directory of this project (where this README file is).
 
 ### Creating the containers
 
-1. Build the overlay mounts and docker image: `./build <path to your netvirt clone>`. 
+1. Build the overlay mounts and docker image: `./build <path to your project clone>`. For OVSDB Southbound or HWVTEP
+   the path should be '<path to ovsdb clone>/southbound|hwvtepsouthbound'.
    
    N.B. that running this script will remove and erase any mount directories from previous runs. If you want to save logs, copy them aside.
    
@@ -91,6 +98,8 @@ Then wait for diagstatus to be ACTIVE (this can take a while):
   `./diagstatus 1`
 
   `./diagstatus 2`
+
+  N.B. that OVSDB projects currently don't support diagstatus, so you will have to check for OVSDB port [6640].
 
 Only then should you
 
