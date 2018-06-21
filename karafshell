@@ -1,0 +1,9 @@
+set +x 
+
+if [ "$1" = "" ];
+then
+    echo "Usage: ./karafshell 1|2|3"
+    exit 2
+fi
+
+sudo docker exec -ti odl_172.28.5.$1 /odlha/karaf/target/assembly/bin/client

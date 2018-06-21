@@ -29,6 +29,7 @@ Script Name    | Description
 **wipe**       | completely deletes the docker containers
 **diagstatus** | Convenience script to check whether an ODL is up and running using the diagstatus URL
 **shell**      | Convenience script to get into a shell running on one of the containers
+**karafshell** | Convenience script to open ODL console in one of the containers
 
 ## Understanding the Environment
 
@@ -110,6 +111,11 @@ You can enter the shell of a running container like this:
 
   `./shell 1` (or 2 or 3...you get the idea)
 
+
+### Open karaf console and run cli
+You can open karaf console of a running ODL instance:
+
+  `./karafshell 1` (or 2 or 3)
 
 ### Forcefully remove the containers
 To completely kill and wipe your running containers simply say `"./wipe"`
