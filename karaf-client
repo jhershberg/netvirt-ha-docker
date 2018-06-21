@@ -1,0 +1,10 @@
+index=$1
+
+if [ ! $index = 1 -a ! $index = 2 -a ! $index = 3 ]
+then
+    echo usage "./karaf-client 1|2|3 \<command and args\>"
+    exit 2
+fi 
+
+shift
+./shell $index /odlha/karaf/target/assembly/bin/client $@

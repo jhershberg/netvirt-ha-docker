@@ -21,14 +21,15 @@ Currently following projects are supported:
 
 ## What scripts are provided
 
-Script Name    | Description
----------------|------------
-**build**      | builds the overlay mounts for each container and the Docker image
-**up**         | configures the dedicated docker network used by the ODL containers (if it does not already exist) and launches the containers (but does not run ODL)
-**start**      | starts the ODL instances inside the containers
-**wipe**       | completely deletes the docker containers
-**diagstatus** | Convenience script to check whether an ODL is up and running using the diagstatus URL
-**shell**      | Convenience script to get into a shell running on one of the containers
+Script Name      | Description
+-----------------|------------
+**build**        | builds the overlay mounts for each container and the Docker image
+**up**           | configures the dedicated docker network used by the ODL containers (if it does not already exist) and launches the containers (but does not run ODL)
+**start**        | starts the ODL instances inside the containers
+**wipe**         | completely deletes the docker containers
+**diagstatus**   | Convenience script to check whether an ODL is up and running using the diagstatus URL
+**shell**        | Convenience script to run commands or a shell on one of the containers
+**karaf-client** | Convenience script to run karaf commands or a karaf shell on one of the containers
 
 ## Understanding the Environment
 
@@ -110,6 +111,18 @@ You can enter the shell of a running container like this:
 
   `./shell 1` (or 2 or 3...you get the idea)
 
+### Run a command on a container
+You can enter the shell of a running container like this:
+
+  `./shell 1 ps ax`
+
+### Open a karaf client on one of the containers
+
+  `./karaf-client 1` (or 2 or 3)
+
+### Execute karaf commands on one of the containers
+
+  `./karaf-client 1 feature:list`
 
 ### Forcefully remove the containers
 To completely kill and wipe your running containers simply say `"./wipe"`
