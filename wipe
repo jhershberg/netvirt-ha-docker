@@ -1,1 +1,1 @@
-sudo docker ps | grep -o "odl_172.*" | xargs sudo docker rm -f
+sudo docker ps -a | grep -o "odl_172.*" | xargs sudo docker rm -f
