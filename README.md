@@ -21,15 +21,16 @@ Currently following projects are supported:
 
 ## What scripts are provided
 
-Script Name      | Description
------------------|------------
-**build**        | builds the overlay mounts for each container and the Docker image
-**up**           | configures the dedicated docker network used by the ODL containers (if it does not already exist) and launches the containers (but does not run ODL)
-**start**        | starts the ODL instances inside the containers
-**wipe**         | completely deletes the docker containers
-**diagstatus**   | Convenience script to check whether an ODL is up and running using the diagstatus URL
-**shell**        | Convenience script to run commands or a shell on one of the containers
-**karaf-client** | Convenience script to run karaf commands or a karaf shell on one of the containers
+Script Name         | Description
+--------------------|------------
+**build**           | builds the overlay mounts for each container and the Docker image
+**up**              | configures the dedicated docker network used by the ODL containers (if it does not already exist) and launches the containers (but does not run ODL)
+**start**           | starts the ODL instances inside the containers
+**wait-for-active** | Wait for the cluster to be active
+**wipe**            | completely deletes the docker containers
+**diagstatus**      | Convenience script to check whether an ODL is up and running using the diagstatus URL
+**shell**           | Convenience script to run commands or a shell on one of the containers
+**karaf-client**    | Convenience script to run karaf commands or a karaf shell on one of the containers
 
 ## Understanding the Environment
 
@@ -87,6 +88,8 @@ Note that all scripts must be run from the root directory of this project (where
 To start all ODLs running simply say:
   
   `./start`
+
+Then just wait for `./wait-for-active` to exit.
   
 **However**, since the initialization of ODL/karaf is extremely heavy it is best
 to just bring up two containers at first and only once they're up and running
