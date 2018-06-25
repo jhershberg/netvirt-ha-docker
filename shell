@@ -1,11 +1,21 @@
-index=$1
+indexes=$1
 
-if [ ! $index = 1 -a ! $index = 2 -a ! $index = 3 ]
+if [ ! $indexes = 1 -a ! $indexes = 2 -a ! $indexes = 3 -a ! $indexes = a ]
 then
     echo usage "./shell 1|2|3 \<command and args\>"
     exit 2
 fi 
 
+if [ $indexes = a ]
+then
+    indexes="1 2 3"
+fi
+
 shift
 args=${@:-bash}
-sudo docker exec -ti odl_172.28.5.$index $args
+
+for i in $indexes
+do
+    echo executing \"$args\" on $i.........................................
+    sudo docker exec -ti odl_172.28.5.$i $args
+done
