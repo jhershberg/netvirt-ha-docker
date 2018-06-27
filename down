@@ -1,0 +1,9 @@
+set +x 
+
+for i in ${@:-1 2 3}
+do
+    echo Stopping $i...
+    sudo docker stop odl_172.28.5.$i
+    sudo docker rm odl_172.28.5.$i
+    sleep 5
+done

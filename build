@@ -2,25 +2,28 @@ set -x
 path=$1
 if [ "$path" = "" ]
 then
-    echo Usage: ./build \<path to netvirt\>
+    echo Usage: ./build \<path-to-repo\> [feature-list]
     exit 2
 fi
 targetpath=${path}/karaf/target
-feature="odl-netvirt-openstack"
+feature=${2:-"odl-netvirt-openstack"}
 if [[ $1 = *"hwvtepsouthbound"* ]];
 then
     targetpath="$1/hwvtepsouthbound-karaf/target"
-    feature="odl-hwvtepsouthbound-rest"
+    feature=${2:-"odl-hwvtepsouthbound-rest"}
 elif [[ $1 = *"southbound"* ]];
 then
     targetpath="$1/southbound-karaf/target"
-    feature="odl-southbound-rest"
+    feature=${2:-"odl-southbound-rest"}
 elif [[ $1 = *"genius"* ]];
 then
-    feature="odl-genius-rest"
+    feature=${2:-"odl-genius-rest"}
 elif [[ $1 = *"neutron"* ]];
 then
-    feature="odl-neutron-service"
+    feature=${2:-"odl-neutron-service"}
+elif [[ $1 = *"distribution"* ]];
+then
+    feature=${2:-"odl-restconf-noauth,odl-jolokia,odl-restconf,odl-clustering-test-app"}
 fi
 
 wget -O ${targetpath}/assembly/bin/configure_cluster.sh https://raw.githubusercontent.com/opendaylight/integration-distribution/master/karaf/src/main/assembly/bin/configure_cluster.sh
