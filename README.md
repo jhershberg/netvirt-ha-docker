@@ -115,9 +115,14 @@ You can enter the shell of a running container like this:
   `./shell 1` (or 2 or 3...you get the idea)
 
 ### Run a command on a container
-You can enter the shell of a running container like this:
+Execute a command on a running container:
 
   `./shell 1 ps ax`
+
+### Run a command on all three containers
+to execute a command on all three containers use the letter 'a' instead of a container index:
+
+  `./shell a find --name karaf.log
 
 ### Open a karaf client on one of the containers
 
@@ -126,6 +131,10 @@ You can enter the shell of a running container like this:
 ### Execute karaf commands on one of the containers
 
   `./karaf-client 1 feature:list`
+
+### Execute a karaf command on all containers
+
+  `./karaf-client a log:set DEBUG org.opendaylight.genius
 
 ### Forcefully remove the containers
 To completely kill and wipe your running containers simply say `"./wipe"`
