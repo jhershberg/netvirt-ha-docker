@@ -60,7 +60,7 @@ The containers are networked together like this:
 |                      |                             |
 |    +------------+    |                             |
 |    | odl_       |----+                             |
-|    | 172.28.5.1 |                                  |
+|    | 172.28.5.3 |                                  |
 |    +------------+                                  |
 +----------------------------------------------------+
 ```
@@ -85,6 +85,9 @@ Note that all scripts must be run from the root directory of this project (where
    
 2. Launch the docker containers: `./up`
 
+   NOTE: At this point, f you have any additional configuration changes or tweaks,
+   you can make them in the appropriate place in each mount/* location.
+   
 ### Running ODL
 To start all ODLs running simply say:
   
