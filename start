@@ -1,8 +1,17 @@
 set +x 
 
+# use 'export START_METHOD=bg' if you want to use the built in start scripts from odlparent
+# use 'export SLEEP=<how long in secs>' to put a different wait (e.g. 0) between controller starts (default is 5s)
+
 for i in ${@:-1 2 3}
 do
     echo Starting $i...
-    sudo docker exec -td odl_172.28.5.$i /odlha/karaf/target/assembly/bin/karaf
-    sleep 5
+    if [ "$START_METHOD" = "bg" ]; then
+      echo "starting odl_172.28.5.$i with bin/start"
+      sudo docker exec odl_172.28.5.$i /odlha/karaf/target/assembly/bin/start
+    else
+      echo "starting odl_172.28.5.$i with bin/karaf"
+      sudo docker exec -td odl_172.28.5.$i /odlha/karaf/target/assembly/bin/karaf
+    fi
+    sleep ${SLEEP:=5}
 done

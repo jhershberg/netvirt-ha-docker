@@ -1,0 +1,7 @@
+set +x 
+
+for i in ${@:-1 2 3}
+do
+    echo "Killing (-9) $i..."
+    sudo docker exec -i odl_172.28.5.$i ps aux | grep karaf.main | grep -v grep | awk '{print "kill -9",$2}' | sudo docker exec -i odl_172.28.5.$i sh
+done
