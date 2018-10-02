@@ -123,11 +123,11 @@ Execute a command on a running container:
 ### Run a command on all three containers
 to execute a command on all three containers use the letter 'a' instead of a container index:
 
-  `./shell a find --name karaf.log
+  `./shell a find --name karaf.log`
 
 ### Open a karaf client on one of the containers
 
-  `./karaf-client 1` (or 2 or 3)
+  `./karaf-client 1` (or 2 or 3)`
 
 ### Execute karaf commands on one of the containers
 
@@ -135,7 +135,7 @@ to execute a command on all three containers use the letter 'a' instead of a con
 
 ### Execute a karaf command on all containers
 
-  `./karaf-client a log:set DEBUG org.opendaylight.genius
+  `./karaf-client a log:set DEBUG org.opendaylight.genius`
 
 ### Forcefully remove the containers
 To completely kill and wipe your running containers simply say `"./wipe"`
