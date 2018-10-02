@@ -72,7 +72,7 @@ The containers are networked together like this:
 1. You must have docker installed
 2. pull the fedora image, `docker pull fedora:latest`
 3. You must have your project cloned and project/karaf fully built (but not run)
-4. Make sure selinux is disabled
+4. Make sure selinux is temporarily disabled via `sudo setenforce 0` (check with `sestatus | grep mode`; re-enable later with `sudo setenforce 1`)
 
 Note that all scripts must be run from the root directory of this project (where this README file is).
 
