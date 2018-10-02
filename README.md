@@ -79,7 +79,7 @@ Note that all scripts must be run from the root directory of this project (where
 ### Creating the containers
 
 1. Build the overlay mounts and docker image: `./build <path to your project clone>`. For OVSDB Southbound or HWVTEP
-   the path should be '<path to ovsdb clone>/southbound|hwvtepsouthbound'.
+   the path should be '<path to ovsdb clone>/southbound|hwvtepsouthbound', for other projects incl. netvirt it is the ODL project's root directory (NOT karaf/ or even karaf/target/assembly).
    
    N.B. that running this script will remove and erase any mount directories from previous runs. If you want to save logs, copy them aside.
    
