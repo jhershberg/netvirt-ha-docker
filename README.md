@@ -5,7 +5,7 @@ Run an ODL cluster on a single machine with these scripts.
 Each ODL instance will run in its own docker container. Each container will mount its own
 overlay mount of your netvirt/karaf/target/assembly directory. This means that (a) all three
 containers share your single set of files comprising for e.g., the netvirt distribution, (b) the changes 
-that each container makes to these files will _not_ be propogated back to your assembly directory, 
+that each container makes to these files will _not_ be propagated back to your assembly directory, 
 (c) changes that each container makes are stored separately, on the _host_ filesystem so that they
 can easily be inspected. Each container's files are stored `./mounts/[1|2|3]/assembly` where 
 [1|2|3] corresponds to the index of each container.
